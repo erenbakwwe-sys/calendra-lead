@@ -1,0 +1,251 @@
+{
+  "common": {
+    "appName": "Calendra Lead",
+    "loading": "Laden...",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "create": "Erstellen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "export": "Exportieren",
+    "import": "Importieren",
+    "back": "Zurück",
+    "next": "Weiter",
+    "confirm": "Bestätigen",
+    "close": "Schließen",
+    "yes": "Ja",
+    "no": "Nein",
+    "actions": "Aktionen",
+    "status": "Status",
+    "noData": "Keine Daten vorhanden",
+    "error": "Fehler",
+    "success": "Erfolgreich",
+    "language": "Sprache",
+    "german": "Deutsch",
+    "turkish": "Türkçe",
+    "logout": "Abmelden",
+    "profile": "Profil",
+    "settings": "Einstellungen",
+    "notifications": "Benachrichtigungen",
+    "guide": "Anleitung (Tour)",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "city": "Ort",
+    "product": "Produkt / Thema",
+    "source": "Quelle",
+    "date": "Datum",
+    "call": "Anrufen",
+    "details": "Details",
+    "notes": "Notizen",
+    "history": "Historie",
+    "all": "Alle",
+    "active": "Aktiv",
+    "paused": "Pausiert",
+    "copy": "Kopieren",
+    "copied": "Kopiert!"
+  },
+  "auth": {
+    "login": "Anmelden",
+    "email": "E-Mail-Adresse",
+    "password": "Passwort",
+    "loginButton": "Im Portal anmelden",
+    "loginTitle": "Willkommen zurück",
+    "loginSubtitle": "Calendra Lead-Verteilungs- & Dialer-Portal",
+    "quickLogin": "Schnell-Login für Demo (Rolle auswählen)",
+    "forgotPassword": "Passwort vergessen?",
+    "invalidCredentials": "Ungültige Anmeldedaten",
+    "tooManyAttempts": "Zu viele Anmeldeversuche. Bitte warten.",
+    "sessionExpired": "Sitzung abgelaufen. Bitte erneut anmelden."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "users": "Benutzerverwaltung",
+    "leads": "Leads",
+    "dialer": "WebRTC Dialer",
+    "campaigns": "Kampagnen",
+    "providers": "Anbieter",
+    "callcenters": "Callcenter",
+    "statistics": "Statistiken",
+    "qc": "Qualitätskontrolle (QC)",
+    "chat": "Team-Chat",
+    "callbacks": "Rückrufe",
+    "liveView": "Live-Ansicht",
+    "settings": "Einstellungen",
+    "audit": "Audit-Log"
+  },
+  "mode": {
+    "provider_leads": "Anbieter-Leads (DE Ingest)",
+    "own_projects": "Eigene Projekte / Direktvertrieb",
+    "switchLabel": "Arbeitsmodus"
+  },
+  "dashboard": {
+    "title": "Übersicht & Schnellzugriff",
+    "welcome": "Willkommen, {name}",
+    "roleTag": "Rolle",
+    "stats": {
+      "totalLeads": "Leads gesamt",
+      "callsToday": "Anrufe heute",
+      "activeAgents": "Aktive Agenten",
+      "conversionRate": "Konversionsrate",
+      "pendingCallbacks": "Offene Rückrufe",
+      "qualifiedLeads": "Qualifizierte Leads",
+      "avgCallDuration": "Ø Gesprächsdauer"
+    },
+    "tiles": {
+      "userManagement": "Benutzerverwaltung",
+      "userManagementDesc": "Benutzer verwalten und Rollen zuweisen",
+      "newUser": "Neuer Benutzer",
+      "newUserDesc": "Einen neuen Benutzer sofort anlegen",
+      "statistics": "Statistiken & KPIs",
+      "statisticsDesc": "Leistung und Konversionen einsehen",
+      "callbacks": "Rückrufe & Termine",
+      "callbacksDesc": "Geplante Rückrufe mit einem Klick anrufen",
+      "leads": "Lead-Management",
+      "leadsDesc": "Alle Leads anzeigen, filtern und zuweisen",
+      "campaigns": "Kampagnen",
+      "campaignsDesc": "Ablauf, Anrufzeiten und Regeln steuern",
+      "qc": "Qualitätskontrolle",
+      "qcDesc": "Aufzeichnungen anhören, Leads prüfen & freigeben",
+      "chat": "Team-Chat",
+      "chatDesc": "Direktnachrichten und Teamräume nutzen"
+    },
+    "quickActions": "Schnellaktionen",
+    "openDialer": "WebRTC Dialer öffnen",
+    "importCsv": "CSV / Excel importieren"
+  },
+  "leads": {
+    "title": "Lead-Bestand",
+    "subtitle": "Eingehende Leads aus dem deutschen Markt mit DSGVO-Einwilligungsnachweis",
+    "searchPlaceholder": "Nach Name, Telefon, Ort oder Produkt suchen...",
+    "newLead": "Lead manuell anlegen",
+    "importCsv": "CSV importieren",
+    "exportCsv": "CSV exportieren",
+    "consentProof": "DSGVO Einwilligungsnachweis",
+    "consentVerified": "Verifizierte Werbeeinwilligung vorhanden",
+    "callLead": "Jetzt anrufen",
+    "dncAction": "Auf Do-Not-Call Liste setzen",
+    "status": {
+      "new": "Neu",
+      "assigned": "Zugewiesen",
+      "in_progress": "In Bearbeitung",
+      "callback": "Rückruf",
+      "contacted": "Kontaktiert",
+      "qualified": "Qualifiziert",
+      "qc_pending": "QC ausstehend",
+      "approved": "Genehmigt (Vertriebsfertig)",
+      "rejected": "Abgelehnt",
+      "delivered": "Ausgeliefert",
+      "not_reachable": "Nicht erreichbar",
+      "wrong_number": "Falsche Nummer",
+      "do_not_call": "Nicht mehr anrufen (DNC)",
+      "rejected_no_consent": "Abgelehnt (keine Einwilligung)",
+      "duplicate": "Duplikat"
+    }
+  },
+  "dialer": {
+    "title": "WebRTC Anrufbildschirm",
+    "idle": "Wartet auf Anruf",
+    "calling": "Wählt (SIP-Trunk Verbindung)...",
+    "connected": "Gespräch aktiv",
+    "ended": "Gespräch beendet",
+    "callDuration": "Dauer",
+    "mute": "Stummschalten",
+    "unmute": "Stummschaltung aufheben",
+    "hold": "Halten",
+    "unhold": "Fortsetzen",
+    "hangup": "Auflegen",
+    "nextLead": "Nächster Lead",
+    "callScript": "Gesprächsleitfaden",
+    "scriptGreeting": "Einstieg: 'Guten Tag, Herr/Frau [Nachname], mein Name ist [AgentName] von [Partner]. Sie hatten eine Anfrage bezüglich einer Photovoltaik-Anlage gestellt...'",
+    "scriptObjection": "Einwandbehandlung: 'Zu teuer? -> KfW-Förderung und Null-Euro-Investitionsmodelle erklären.'",
+    "disposition": "Ergebnis eintragen (Disposition)",
+    "selectOutcome": "Ergebnis auswählen",
+    "scheduleCallback": "Rückruf / Termin vereinbaren",
+    "notesPlaceholder": "Gesprächsnotizen eingeben (werden automatisch gespeichert)..."
+  },
+  "qc": {
+    "title": "Qualitätskontrolle (QC)",
+    "subtitle": "Qualifizierte Leads prüfen und Aufzeichnungen verifizieren",
+    "recordingPlayer": "Gesprächsaufzeichnung",
+    "checklist": "DSGVO- & Kriterienprüfung",
+    "check1": "Identität und Postleitzahl des Verbrauchers bestätigt",
+    "check2": "Ausdrückliche Werbeeinwilligung im Gespräch dokumentiert",
+    "check3": "Technische Eignung (Dacheigentum / Heizung) gegeben",
+    "approve": "Genehmigen & an Käufer freigeben",
+    "reject": "Mit Begründung ablehnen",
+    "rejectionPrompt": "Bitte geben Sie den Grund für die Ablehnung an:"
+  },
+  "live": {
+    "title": "Live-Callcenter-Überwachung",
+    "subtitle": "Echtzeitstatus aller Agenten und aktive Telefonate",
+    "sipTrunk": "SIP-Trunk: Frankfurt Gateway (10/10 Kanäle aktiv)",
+    "eavesdrop": "Mithören (Supervisor)",
+    "whisper": "Zuflüstern",
+    "bargeIn": "Aufschalten",
+    "agentStatuses": {
+      "available": "Verfügbar",
+      "on_call": "Im Gespräch",
+      "wrap_up": "Nachbearbeitung",
+      "pause": "Pause",
+      "offline": "Offline"
+    }
+  },
+  "tour": {
+    "title": "Calendra Portal Einführungstour",
+    "step": "Schritt {current} von {total}",
+    "finish": "Tour abschließen",
+    "steps": [
+      {
+        "title": "1. Modernes Kachel-Layout",
+        "desc": "Über die 8 Hauptkacheln im Dashboard steuern Sie die gesamte Plattform: von Benutzerverwaltung über Leads bis hin zum QC-Bereich."
+      },
+      {
+        "title": "2. Lead-Verteilung & Kampagnen",
+        "desc": "Deutsche Lead-Anbieter pushen Leads per API. Unsere Verteilungslogik weist diese nach Round-Robin, Last oder Pool an Callcenter in der Türkei zu."
+      },
+      {
+        "title": "3. WebRTC Browser-Dialer",
+        "desc": "Agenten benötigen keine externe Software: Ein Klick auf 'Anrufen' startet das Telefonat direkt im Browser über den verschlüsselten SIP-Trunk."
+      },
+      {
+        "title": "4. Qualitätskontrolle (QC)",
+        "desc": "Jeder qualifizierte Lead wird vor der Auslieferung durch QC-Prüfer mit Audio-Playback und Kriterien-Checkliste freigegeben."
+      },
+      {
+        "title": "5. Live-Supervisor Funktionen",
+        "desc": "Teamleiter können in Echtzeit Agentenstatus überwachen, Gespräche mithören (mithören), zuflüstern oder sich aufschalten."
+      }
+    ]
+  },
+  "users": {
+    "title": "Benutzer- und Teamverwaltung",
+    "createUser": "Neuen Benutzer anlegen",
+    "editUser": "Benutzer bearbeiten",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail",
+    "role": "Rolle",
+    "status": "Status",
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "team": "Team",
+    "callcenter": "Callcenter",
+    "lastLogin": "Letzter Login",
+    "roles": {
+      "super_admin": "👑 Super-Admin (Plattform)",
+      "tenant_admin": "🏢 Mandanten-Admin",
+      "team_leader": "👔 Teamleiter",
+      "qc": "🔍 Qualitätskontrolle (QC)",
+      "agent": "🎧 Agent (Operator)",
+      "callcenter": "🏢 Callcenter Partner",
+      "provider": "📡 Anbieter (Provider)"
+    }
+  },
+  "tenant": {
+    "switch": "Firma wechseln",
+    "current": "Aktuelle Firma",
+    "selectTenant": "Firma auswählen"
+  }
+}

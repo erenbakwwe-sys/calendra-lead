@@ -1,0 +1,471 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tenant {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  isActive    Boolean  @default(true) @map("is_active")
+  settings    Json     @default("{}")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+  
+  users       User[]
+  callCenters CallCenter[]
+  leads       Lead[]
+  campaigns   Campaign[]
+  providers   ProviderTenant[]
+  dncList     DncEntry[]
+  trunkSettings TrunkSetting[]
+  featureFlags  FeatureFlag[]
+  auditLogs   AuditLog[]
+  chatMessages ChatMessage[]
+  notifications Notification[]
+
+  @@map("tenants")
+}
+
+model User {
+  id          String   @id @default(uuid())
+  tenantId    String   @map("tenant_id")
+  email       String
+  password    String
+  firstName   String   @map("first_name")
+  lastName    String   @map("last_name")
+  role        String
+  isActive    Boolean  @default(true) @map("is_active")
+  language    String   @default("de")
+  totpSecret  String?  @map("totp_secret")
+  totpEnabled Boolean  @default(false) @map("totp_enabled")
+  lastLoginAt DateTime? @map("last_login_at")
+  callCenterId String?  @map("call_center_id")
+  teamId      String?  @map("team_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  callCenter  CallCenter? @relation(fields: [callCenterId], references: [id])
+  team        Team?    @relation(fields: [teamId], references: [id])
+  assignedLeads Lead[] @relation("AssignedAgent")
+  callLogs    CallLog[]
+  qcReviews   QcReview[]
+  auditLogs   AuditLog[]
+  sentMessages ChatMessage[] @relation("SentMessages")
+  notifications Notification[]
+  leadNotes   LeadNote[]
+  leadStatusHistory LeadStatusHistory[]
+  refreshTokens RefreshToken[]
+
+  @@unique([email, tenantId])
+  @@index([tenantId])
+  @@index([role])
+  @@index([callCenterId])
+  @@index([teamId])
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  revokedAt DateTime? @map("revoked_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([token])
+  @@map("refresh_tokens")
+}
+
+model CallCenter {
+  id          String   @id @default(uuid())
+  tenantId    String   @map("tenant_id")
+  name        String
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  teams       Team[]
+  users       User[]
+  campaignAssignments CampaignAssignment[]
+  @@index([tenantId])
+  @@map("call_centers")
+}
+
+model Team {
+  id          String   @id @default(uuid())
+  callCenterId String  @map("call_center_id")
+  name        String
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  callCenter  CallCenter @relation(fields: [callCenterId], references: [id])
+  users       User[]
+  @@map("teams")
+}
+
+model Provider {
+  id          String   @id @default(uuid())
+  name        String
+  isActive    Boolean  @default(true) @map("is_active")
+  type        String   @default("push")
+  pullConfig  Json?    @map("pull_config")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  apiKeys     ProviderApiKey[]
+  tenants     ProviderTenant[]
+  leads       Lead[]
+  ingestLogs  ProviderIngestLog[]
+  @@map("providers")
+}
+
+model ProviderTenant {
+  id          String   @id @default(uuid())
+  providerId  String   @map("provider_id")
+  tenantId    String   @map("tenant_id")
+  isActive    Boolean  @default(true) @map("is_active")
+  fieldMapping Json?   @map("field_mapping")
+  createdAt   DateTime @default(now()) @map("created_at")
+  provider    Provider @relation(fields: [providerId], references: [id])
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  @@unique([providerId, tenantId])
+  @@map("provider_tenants")
+}
+
+model ProviderApiKey {
+  id          String   @id @default(uuid())
+  providerId  String   @map("provider_id")
+  keyHash     String   @map("key_hash")
+  keyPrefix   String   @map("key_prefix")
+  name        String   @default("default")
+  isActive    Boolean  @default(true) @map("is_active")
+  ipAllowlist String[] @map("ip_allowlist")
+  createdAt   DateTime @default(now()) @map("created_at")
+  lastUsedAt  DateTime? @map("last_used_at")
+  provider    Provider @relation(fields: [providerId], references: [id])
+  @@index([keyHash])
+  @@map("provider_api_keys")
+}
+
+model ProviderIngestLog {
+  id            String   @id @default(uuid())
+  providerId    String   @map("provider_id")
+  method        String
+  status        String
+  leadsReceived Int      @map("leads_received")
+  leadsAccepted Int      @map("leads_accepted")
+  leadsRejected Int      @map("leads_rejected")
+  leadsDuplicate Int     @map("leads_duplicate")
+  errorDetails  Json?    @map("error_details")
+  requestIp     String?  @map("request_ip")
+  createdAt     DateTime @default(now()) @map("created_at")
+  provider      Provider @relation(fields: [providerId], references: [id])
+  @@index([providerId])
+  @@index([createdAt])
+  @@map("provider_ingest_logs")
+}
+
+model Lead {
+  id              String   @id @default(uuid())
+  tenantId        String   @map("tenant_id")
+  providerId      String?  @map("provider_id")
+  providerLeadId  String?  @map("provider_lead_id")
+  campaignId      String?  @map("campaign_id")
+  assignedAgentId String?  @map("assigned_agent_id")
+  firstName       String   @map("first_name")
+  lastName        String?  @map("last_name")
+  phone           String
+  phoneNormalized String   @map("phone_normalized")
+  email           String?
+  postalCode      String?  @map("postal_code")
+  city            String?
+  product         String?
+  source          String?
+  status          String   @default("new")
+  priority        Int      @default(0)
+  attempts        Int      @default(0)
+  maxAttempts     Int      @default(5) @map("max_attempts")
+  lastAttemptAt   DateTime? @map("last_attempt_at")
+  nextCallAt      DateTime? @map("next_call_at")
+  lockedBy        String?  @map("locked_by")
+  lockedUntil     DateTime? @map("locked_until")
+  extraData       Json?    @map("extra_data")
+  rejectionReason String?  @map("rejection_reason")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  deletedAt       DateTime? @map("deleted_at")
+  tenant          Tenant   @relation(fields: [tenantId], references: [id])
+  provider        Provider? @relation(fields: [providerId], references: [id])
+  campaign        Campaign? @relation(fields: [campaignId], references: [id])
+  assignedAgent   User?    @relation("AssignedAgent", fields: [assignedAgentId], references: [id])
+  consents        LeadConsent[]
+  statusHistory   LeadStatusHistory[]
+  notes           LeadNote[]
+  callLogs        CallLog[]
+  callbacks       Callback[]
+  qcReviews       QcReview[]
+  @@unique([providerLeadId, providerId])
+  @@index([tenantId])
+  @@index([phoneNormalized])
+  @@index([status])
+  @@index([assignedAgentId])
+  @@index([campaignId])
+  @@index([createdAt])
+  @@map("leads")
+}
+
+model LeadConsent {
+  id                String   @id @default(uuid())
+  leadId            String   @map("lead_id")
+  consentGiven      Boolean  @map("consent_given")
+  consentTimestamp  DateTime @map("consent_timestamp")
+  consentSourceUrl  String?  @map("consent_source_url")
+  consentSourceText String?  @map("consent_source_text")
+  consentIp         String?  @map("consent_ip")
+  consentTextVersion String? @map("consent_text_version")
+  namedPartners     String[] @map("named_partners")
+  createdAt         DateTime @default(now()) @map("created_at")
+  lead              Lead     @relation(fields: [leadId], references: [id])
+  @@index([leadId])
+  @@map("lead_consents")
+}
+
+model LeadStatusHistory {
+  id        String   @id @default(uuid())
+  leadId    String   @map("lead_id")
+  userId    String?  @map("user_id")
+  fromStatus String  @map("from_status")
+  toStatus  String   @map("to_status")
+  note      String?
+  createdAt DateTime @default(now()) @map("created_at")
+  lead      Lead     @relation(fields: [leadId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id])
+  @@index([leadId])
+  @@map("lead_status_history")
+}
+
+model LeadNote {
+  id        String   @id @default(uuid())
+  leadId    String   @map("lead_id")
+  userId    String   @map("user_id")
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  lead      Lead     @relation(fields: [leadId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  @@index([leadId])
+  @@map("lead_notes")
+}
+
+model Campaign {
+  id              String   @id @default(uuid())
+  tenantId        String   @map("tenant_id")
+  name            String
+  product         String?
+  assignmentMode  String   @default("manual") @map("assignment_mode")
+  dialerMode      String   @default("manual") @map("dialer_mode")
+  maxAttempts     Int      @default(5) @map("max_attempts")
+  retryInterval   Int      @default(60) @map("retry_interval")
+  callWindowStart String   @default("09:00") @map("call_window_start")
+  callWindowEnd   String   @default("20:00") @map("call_window_end")
+  callWindowTz    String   @default("Europe/Berlin") @map("call_window_tz")
+  noWeekendCalls  Boolean  @default(true) @map("no_weekend_calls")
+  noHolidayCalls  Boolean  @default(true) @map("no_holiday_calls")
+  priority        Int      @default(0)
+  script          String?
+  isActive        Boolean  @default(true) @map("is_active")
+  isPaused        Boolean  @default(false) @map("is_paused")
+  settings        Json     @default("{}")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  tenant          Tenant   @relation(fields: [tenantId], references: [id])
+  leads           Lead[]
+  assignments     CampaignAssignment[]
+  @@index([tenantId])
+  @@map("campaigns")
+}
+
+model CampaignAssignment {
+  id           String   @id @default(uuid())
+  campaignId   String   @map("campaign_id")
+  callCenterId String   @map("call_center_id")
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at")
+  campaign     Campaign   @relation(fields: [campaignId], references: [id])
+  callCenter   CallCenter @relation(fields: [callCenterId], references: [id])
+  @@unique([campaignId, callCenterId])
+  @@map("campaign_assignments")
+}
+
+model DncEntry {
+  id        String   @id @default(uuid())
+  tenantId  String   @map("tenant_id")
+  phone     String
+  reason    String?
+  addedBy   String?  @map("added_by")
+  createdAt DateTime @default(now()) @map("created_at")
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  @@unique([tenantId, phone])
+  @@index([tenantId])
+  @@index([phone])
+  @@map("dnc_list")
+}
+
+model CallLog {
+  id            String   @id @default(uuid())
+  leadId        String   @map("lead_id")
+  agentId       String   @map("agent_id")
+  campaignId    String?  @map("campaign_id")
+  direction     String   @default("outbound")
+  callerNumber  String?  @map("caller_number")
+  calleeNumber  String   @map("callee_number")
+  startTime     DateTime @map("start_time")
+  answerTime    DateTime? @map("answer_time")
+  endTime       DateTime? @map("end_time")
+  duration      Int?
+  disposition   String?
+  hangupCause   String?  @map("hangup_cause")
+  recordingFile String?  @map("recording_file")
+  createdAt     DateTime @default(now()) @map("created_at")
+  lead          Lead     @relation(fields: [leadId], references: [id])
+  agent         User     @relation(fields: [agentId], references: [id])
+  @@index([leadId])
+  @@index([agentId])
+  @@index([startTime])
+  @@map("call_logs")
+}
+
+model Recording {
+  id          String   @id @default(uuid())
+  callLogId   String?  @map("call_log_id")
+  filePath    String   @map("file_path")
+  duration    Int?
+  fileSize    Int?     @map("file_size")
+  retainUntil DateTime? @map("retain_until")
+  createdAt   DateTime @default(now()) @map("created_at")
+  @@map("recordings")
+}
+
+model Callback {
+  id          String   @id @default(uuid())
+  leadId      String   @map("lead_id")
+  agentId     String?  @map("agent_id")
+  scheduledAt DateTime @map("scheduled_at")
+  note        String?
+  isCompleted Boolean  @default(false) @map("is_completed")
+  completedAt DateTime? @map("completed_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  lead        Lead     @relation(fields: [leadId], references: [id])
+  @@index([scheduledAt])
+  @@index([agentId])
+  @@map("callbacks")
+}
+
+model QcReview {
+  id         String   @id @default(uuid())
+  leadId     String   @map("lead_id")
+  reviewerId String   @map("reviewer_id")
+  status     String
+  reason     String?
+  createdAt  DateTime @default(now()) @map("created_at")
+  lead       Lead     @relation(fields: [leadId], references: [id])
+  reviewer   User     @relation(fields: [reviewerId], references: [id])
+  @@index([leadId])
+  @@map("qc_reviews")
+}
+
+model ChatMessage {
+  id          String   @id @default(uuid())
+  tenantId    String   @map("tenant_id")
+  senderId    String   @map("sender_id")
+  recipientId String?  @map("recipient_id")
+  channel     String   @default("direct")
+  content     String
+  isRead      Boolean  @default(false) @map("is_read")
+  createdAt   DateTime @default(now()) @map("created_at")
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  sender      User     @relation("SentMessages", fields: [senderId], references: [id])
+  @@index([tenantId])
+  @@index([recipientId])
+  @@index([createdAt])
+  @@map("chat_messages")
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  tenantId  String?  @map("tenant_id")
+  userId    String   @map("user_id")
+  type      String
+  title     String
+  message   String
+  isRead    Boolean  @default(false) @map("is_read")
+  data      Json?
+  createdAt DateTime @default(now()) @map("created_at")
+  tenant    Tenant?  @relation(fields: [tenantId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  tenantId  String?  @map("tenant_id")
+  userId    String?  @map("user_id")
+  action    String
+  entity    String?
+  entityId  String?  @map("entity_id")
+  oldValue  Json?    @map("old_value")
+  newValue  Json?    @map("new_value")
+  ipAddress String?  @map("ip_address")
+  userAgent String?  @map("user_agent")
+  createdAt DateTime @default(now()) @map("created_at")
+  tenant    Tenant?  @relation(fields: [tenantId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id])
+  @@index([tenantId])
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+model TrunkSetting {
+  id              String   @id @default(uuid())
+  tenantId        String   @map("tenant_id")
+  name            String
+  host            String
+  port            Int      @default(5060)
+  transport       String   @default("udp")
+  authType        String   @default("credentials") @map("auth_type")
+  username        String?
+  encryptedPassword String? @map("encrypted_password")
+  codecs          String[] @default(["alaw", "ulaw"])
+  maxChannels     Int      @default(10) @map("max_channels")
+  callerIdNumber  String?  @map("caller_id_number")
+  callerIdName    String?  @map("caller_id_name")
+  isActive        Boolean  @default(true) @map("is_active")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  tenant          Tenant   @relation(fields: [tenantId], references: [id])
+  @@index([tenantId])
+  @@map("trunk_settings")
+}
+
+model FeatureFlag {
+  id          String   @id @default(uuid())
+  tenantId    String?  @map("tenant_id")
+  key         String
+  value       Boolean  @default(false)
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  tenant      Tenant?  @relation(fields: [tenantId], references: [id])
+  @@unique([tenantId, key])
+  @@map("feature_flags")
+}

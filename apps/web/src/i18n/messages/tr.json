@@ -1,0 +1,251 @@
+{
+  "common": {
+    "appName": "Calendra Lead",
+    "loading": "Yükleniyor...",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "create": "Oluştur",
+    "search": "Ara",
+    "filter": "Filtrele",
+    "export": "Dışa Aktar",
+    "import": "İçe Aktar",
+    "back": "Geri",
+    "next": "İleri",
+    "confirm": "Onayla",
+    "close": "Kapat",
+    "yes": "Evet",
+    "no": "Hayır",
+    "actions": "İşlemler",
+    "status": "Durum",
+    "noData": "Kayıt bulunamadı",
+    "error": "Hata",
+    "success": "Başarılı",
+    "language": "Dil",
+    "german": "Almanca",
+    "turkish": "Türkçe",
+    "logout": "Çıkış Yap",
+    "profile": "Profil",
+    "settings": "Ayarlar",
+    "notifications": "Bildirimler",
+    "guide": "Rehber (Tur)",
+    "phone": "Telefon",
+    "email": "E-posta",
+    "city": "Şehir",
+    "product": "Ürün / Konu",
+    "source": "Kaynak",
+    "date": "Tarih",
+    "call": "Ara",
+    "details": "Detaylar",
+    "notes": "Notlar",
+    "history": "Geçmiş",
+    "all": "Tümü",
+    "active": "Aktif",
+    "paused": "Duraklatıldı",
+    "copy": "Kopyala",
+    "copied": "Kopyalandı!"
+  },
+  "auth": {
+    "login": "Giriş Yap",
+    "email": "E-posta Adresi",
+    "password": "Şifre",
+    "loginButton": "Sisteme Giriş Yap",
+    "loginTitle": "Hoş Geldiniz",
+    "loginSubtitle": "Calendra Lead Verteilungs- & Dialer Portalı",
+    "quickLogin": "Hızlı Demo Girişi (Tek Tıkla Seçin)",
+    "forgotPassword": "Şifremi unuttum",
+    "invalidCredentials": "Geçersiz giriş bilgileri",
+    "tooManyAttempts": "Çok fazla giriş denemesi. Lütfen bekleyin.",
+    "sessionExpired": "Oturum süresi doldu."
+  },
+  "nav": {
+    "dashboard": "Kontrol Paneli",
+    "users": "Kullanıcı Yönetimi",
+    "leads": "Müşteri Adayları (Leads)",
+    "dialer": "WebRTC Dialer (Arama)",
+    "campaigns": "Kampanyalar",
+    "providers": "Sağlayıcılar (Providers)",
+    "callcenters": "Çağrı Merkezleri",
+    "statistics": "İstatistikler",
+    "qc": "Kalite Kontrol (QC)",
+    "chat": "Ekip Sohbeti",
+    "callbacks": "Geri Aramalar",
+    "liveView": "Canlı Operasyon",
+    "settings": "Sistem Ayarları",
+    "audit": "Denetim Günlüğü"
+  },
+  "mode": {
+    "provider_leads": "Sağlayıcı Portalı (Almanya API)",
+    "own_projects": "Kendi Projelerimiz / Doğrudan Satış",
+    "switchLabel": "Çalışma Modu"
+  },
+  "dashboard": {
+    "title": "Operasyon Özeti & Kısayollar",
+    "welcome": "Hoş Geldiniz, {name}",
+    "roleTag": "Yetki",
+    "stats": {
+      "totalLeads": "Toplam Aday (Leads)",
+      "callsToday": "Bugünkü Aramalar",
+      "activeAgents": "Aktif Temsilciler",
+      "conversionRate": "Dönüşüm Oranı",
+      "pendingCallbacks": "Bekleyen Geri Aramalar",
+      "qualifiedLeads": "Nitelikli Adaylar",
+      "avgCallDuration": "Ort. Çağrı Süresi"
+    },
+    "tiles": {
+      "userManagement": "Kullanıcı Yönetimi",
+      "userManagementDesc": "Temsilci, takım lideri ve yetkileri yönetin",
+      "newUser": "Yeni Kullanıcı Ekle",
+      "newUserDesc": "Sisteme anında yeni bir operatör tanımlayın",
+      "statistics": "Detaylı Raporlar",
+      "statisticsDesc": "Temsilci ve kampanya KPI grafiklerini inceleyin",
+      "callbacks": "Planlı Geri Aramalar",
+      "callbacksDesc": "Zamanı gelen randevuları tek tıkla arayın",
+      "leads": "Tüm Müşteri Adayları",
+      "leadsDesc": "Gelen leadleri filtreleyin, atayın ve dışa aktarın",
+      "campaigns": "Kampanya Yönetimi",
+      "campaignsDesc": "Arama süreleri, dağıtım ve kuralları belirleyin",
+      "qc": "Kalite Kontrol (QC)",
+      "qcDesc": "Ses kayıtlarını dinleyin, onaylayın veya reddedin",
+      "chat": "İç Ekip İletişimi",
+      "chatDesc": "Takım liderleri ve temsilciler arası anlık mesajlaşma"
+    },
+    "quickActions": "Hızlı Eylemler",
+    "openDialer": "WebRTC Dialer'ı Aç",
+    "importCsv": "CSV / Excel Lead Yükle"
+  },
+  "leads": {
+    "title": "Müşteri Adayı Havuzu",
+    "subtitle": "Almanya pazarından gelen onaylı müşteri adaylarının yönetimi",
+    "searchPlaceholder": "İsim, telefon, şehir veya ürün ara...",
+    "newLead": "Yeni Lead Ekle",
+    "importCsv": "CSV İçe Aktar",
+    "exportCsv": "CSV İndir",
+    "consentProof": "DSGVO Onay Belgesi (Einwilligung)",
+    "consentVerified": "Resmi Tüketici Onayı Mevcut",
+    "callLead": "Hemen Ara",
+    "dncAction": "Kara Listeye Al (DNC)",
+    "status": {
+      "new": "Yeni",
+      "assigned": "Atandı",
+      "in_progress": "Görüşülüyor",
+      "callback": "Geri Arama",
+      "contacted": "Ulaşıldı",
+      "qualified": "Nitelikli",
+      "qc_pending": "QC Onayında",
+      "approved": "Onaylandı (Satışa Hazır)",
+      "rejected": "Reddedildi",
+      "delivered": "Müşteriye İletildi",
+      "not_reachable": "Ulaşılamadı",
+      "wrong_number": "Yanlış Numara",
+      "do_not_call": "Arama İptali (DNC)",
+      "rejected_no_consent": "Onaysız (Reddedildi)",
+      "duplicate": "Mükerrer Kayıt"
+    }
+  },
+  "dialer": {
+    "title": "WebRTC Canlı Görüşme Ekranı",
+    "idle": "Arama Bekleniyor",
+    "calling": "Aranıyor (SIP Trunk Bağlanıyor...)",
+    "connected": "Görüşme Devam Ediyor",
+    "ended": "Görüşme Sona Erdi",
+    "callDuration": "Süre",
+    "mute": "Sessize Al",
+    "unmute": "Sesi Aç",
+    "hold": "Beklet",
+    "unhold": "Bekletmeyi Kaldır",
+    "hangup": "Çağrıyı Sonlandır",
+    "nextLead": "Sıradaki Lead'e Geç",
+    "callScript": "Gesprächsleitfaden (Konuşma Rehberi)",
+    "scriptGreeting": "Giriş: 'Guten Tag, Herr/Frau [Nachname], mein Name ist [AgentName] von [Partner]. Sie hatten sich für eine Photovoltaik-Anlage interessiert...'",
+    "scriptObjection": "İtiraz Karşılama: 'Fiyat pahalı derse -> KfW %0 faizli teşvik ve aylık amortisman modelini vurgulayın.'",
+    "disposition": "Görüşme Sonucu (Outcome)",
+    "selectOutcome": "Sonuç Seçiniz",
+    "scheduleCallback": "Randevu / Geri Arama Belirle",
+    "notesPlaceholder": "Görüşme notlarınızı buraya yazın (otomatik kaydedilir)..."
+  },
+  "qc": {
+    "title": "Kalite Kontrol & Kayıt İnceleme",
+    "subtitle": "Nitelikli olarak işaretlenen görüşmelerin teyit edilmesi",
+    "recordingPlayer": "Görüşme Ses Kaydı Simülasyonu",
+    "checklist": "DSGVO & Kalite Doğrulama Kriterleri",
+    "check1": "Tüketici kimlik ve adres teyidi yapıldı",
+    "check2": "Açık rıza beyanı (Einwilligung) net şekilde kaydedildi",
+    "check3": "Ürün şartları (çatı mülkiyeti / ısıtma tipi) karşılanıyor",
+    "approve": "Onayla ve Satışa İlet",
+    "reject": "Eksik Bilgi Nedeniyle Reddet",
+    "rejectionPrompt": "Lütfen ret gerekçesini belirtiniz:"
+  },
+  "live": {
+    "title": "Canlı Çağrı Merkezi Operasyonu",
+    "subtitle": "Temsilci durumları ve aktif görüşmelerin anlık izlenmesi",
+    "sipTrunk": "SIP Trunk: Frankfurt Gateway (10/10 Kanal Aktif)",
+    "eavesdrop": "Mithören (Gizli Dinle)",
+    "whisper": "Zuflüstern (Temsilciye Fısılda)",
+    "bargeIn": "Aufschalten (Çağrıya Dahil Ol)",
+    "agentStatuses": {
+      "available": "Boşta / Çağrı Bekliyor",
+      "on_call": "Görüşmede",
+      "wrap_up": "Çağrı Sonrası Not Girişi",
+      "pause": "Molada",
+      "offline": "Çevrimdışı"
+    }
+  },
+  "tour": {
+    "title": "Calendra Portalı Hızlı Başlangıç Rehberi",
+    "step": "Adım {current} / {total}",
+    "finish": "Turu Tamamla",
+    "steps": [
+      {
+        "title": "1. Modern Kiremit / Kachel Düzeni",
+        "desc": "Kontrol panelindeki 8 ana kiremit ile kullanıcılar, leads, geri aramalar ve istatistiklere tek dokunuşla ulaşabilirsiniz."
+      },
+      {
+        "title": "2. Otomatik Lead Dağıtımı & Kampanyalar",
+        "desc": "Almanya pazarından API ile akan müşteri adayları, kampanya kurallarına (Round-Robin, Yük Bazlı, Havuz) göre Türkiye'deki çağrı merkezlerine anında dağıtılır."
+      },
+      {
+        "title": "3. Entegre WebRTC Browser Dialer",
+        "desc": "Harici bir telefon programı kurmadan, tarayıcı üzerinden doğrudan arama yapabilir, ses seviyesini yönetebilir ve sonucu anında kaydedebilirsiniz."
+      },
+      {
+        "title": "4. Kalite Kontrol (QC) & Ses Kayıtları",
+        "desc": "Temsilcilerin nitelikli bulduğu tüm adaylar ses kayıtlarıyla birlikte denetlenir ve sadece kusursuz olanlar onaylanır."
+      },
+      {
+        "title": "5. Canlı Gözetmen (Supervisor) Araçları",
+        "desc": "Takım liderleri aktif çağrıları canlı dinleyebilir (mithören), temsilciye duyulmadan fısıldayabilir (zuflüstern) veya çağrıya katılabilir."
+      }
+    ]
+  },
+  "users": {
+    "title": "Kullanıcı & Takım Yönetimi",
+    "createUser": "Yeni Kullanıcı Oluştur",
+    "editUser": "Kullanıcı Düzenle",
+    "firstName": "Ad",
+    "lastName": "Soyad",
+    "email": "E-posta",
+    "role": "Sistem Rolü",
+    "status": "Durum",
+    "active": "Aktif",
+    "inactive": "Pasif",
+    "team": "Bağlı Takım",
+    "callcenter": "Çağrı Merkezi",
+    "lastLogin": "Son Giriş",
+    "roles": {
+      "super_admin": "👑 Süper Yönetici (Plattformbetreiber)",
+      "tenant_admin": "🏢 Firma Yöneticisi (Mandant-Admin)",
+      "team_leader": "👔 Takım Lideri (Teamleiter)",
+      "qc": "🔍 Kalite Kontrol (QC)",
+      "agent": "🎧 Temsilci / Ajan (Operator)",
+      "callcenter": "🏢 Çağrı Merkezi Partneri",
+      "provider": "📡 Veri Sağlayıcı (Provider)"
+    }
+  },
+  "tenant": {
+    "switch": "Firma Değiştir",
+    "current": "Mevcut Firma",
+    "selectTenant": "Çalışılacak Firmayı Seçin"
+  }
+}
