@@ -17,16 +17,37 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     setMounted(true);
     if (!isAuthenticated) {
-      router.push('/login');
+      window.location.href = '/login';
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated]);
 
   if (!mounted || !isAuthenticated) {
     return (
-      <div className="h-screen w-screen bg-dark-900 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-gold-500 border-t-transparent rounded-full animate-spin"></div>
-          <span className="text-xs text-gold-400 font-mono tracking-wider">CALENDRA LEAD LÄDT...</span>
+      <div className="h-screen w-screen bg-dark-950 flex items-center justify-center relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="ambient-glow-gold -top-20 left-1/2 -translate-x-1/2 animate-pulse-slow pointer-events-none" />
+
+        <div className="flex flex-col items-center gap-4 relative z-10">
+          <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gold-metallic text-dark-950 font-black text-2xl shadow-gold-md animate-glow">
+            <span className="drop-shadow-sm">V</span>
+            <div className="absolute inset-0 rounded-2xl bg-white/20 animate-pulse" />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 border-2 border-gold-500 border-t-transparent rounded-full animate-spin"></div>
+            <span className="text-xs text-gold-400 font-mono tracking-widest font-semibold uppercase">
+              VertriebsHub wird geladen...
+            </span>
+          </div>
+
+          {!isAuthenticated && mounted && (
+            <button
+              onClick={() => { window.location.href = '/login'; }}
+              className="mt-2 text-xs font-bold text-gray-400 hover:text-gold-300 underline"
+            >
+              Zum Login weiterleiten →
+            </button>
+          )}
         </div>
       </div>
     );

@@ -34,7 +34,7 @@ export default function LoginPage() {
   const [error, setError] = useState('');
 
   const demoAccounts = [
-    { role: 'super_admin', label: '👑 Super-Admin', email: 'super@calendra.de', name: 'Super Admin', sub: 'Plattform-Ebene', lang: 'de' },
+    { role: 'super_admin', label: '👑 Super-Admin', email: 'super@vertriebshub.de', name: 'Super Admin', sub: 'Plattform-Ebene', lang: 'de' },
     { role: 'tenant_admin', label: '🏢 Firma Admin', email: 'admin@demo.de', name: 'Firma Admin', sub: 'Mandanten-Admin', lang: 'de' },
     { role: 'team_leader', label: '👔 Takım Lideri (TL)', email: 'teamlead@demo.de', name: 'Ahmet Yilmaz', sub: 'Team Alpha', lang: 'tr' },
     { role: 'agent', label: '🎧 Temsilci / Agent', email: 'agent1@demo.de', name: 'Mehmet Demir', sub: 'Operator', lang: 'tr' },
@@ -109,13 +109,13 @@ export default function LoginPage() {
 
       {/* Header Logo */}
       <div className="w-full max-w-lg mb-6 flex flex-col items-center text-center relative z-10 pointer-events-none">
-        <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-gold-metallic text-dark-950 font-black text-3xl shadow-gold-lg mb-3 border border-white/20">
-          <span className="drop-shadow-sm">C</span>
+        <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-gold-metallic text-dark-950 font-black text-3xl shadow-gold-lg mb-3 border border-white/20 animate-glow">
+          <span className="drop-shadow-sm font-black">V</span>
           <div className="absolute inset-0 rounded-2xl bg-white/20 animate-pulse" />
         </div>
         
         <h1 className="text-3xl sm:text-4xl font-black text-gray-100 tracking-tight">
-          Calendra <span className="gold-gradient-text font-black">Lead</span>
+          Vertriebs<span className="gold-gradient-text font-black">Hub</span>
         </h1>
         <p className="text-xs sm:text-sm text-gray-400 mt-1 max-w-md font-medium">
           Mandantenfähiges Lead-Verteilungs- & WebRTC Dialer-Portal

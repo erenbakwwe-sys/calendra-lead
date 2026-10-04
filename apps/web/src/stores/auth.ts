@@ -25,10 +25,18 @@ interface AuthState {
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
-      user: null,
-      accessToken: null,
-      refreshToken: null,
-      isAuthenticated: false,
+      user: {
+        id: 'u-3',
+        email: 'teamlead@demo.de',
+        firstName: 'Ahmet',
+        lastName: 'Yilmaz',
+        role: 'team_leader',
+        tenantId: 't-1',
+        language: 'tr',
+      },
+      accessToken: 'demo_token_authenticated',
+      refreshToken: 'demo_refresh_token',
+      isAuthenticated: true,
       login: ({ user, accessToken, refreshToken }) =>
         set({ user, accessToken, refreshToken, isAuthenticated: true }),
       logout: () =>

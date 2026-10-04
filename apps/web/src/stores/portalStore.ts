@@ -361,7 +361,7 @@ const initialLeads: LeadItem[] = [
 ];
 
 const initialUsers: UserItem[] = [
-  { id: 'u-1', firstName: 'Super', lastName: 'Admin', email: 'super@calendra.de', role: 'super_admin', isActive: true, language: 'de', callCenter: 'Hauptverwaltung', team: 'Management', lastLogin: 'Vor 5 Min' },
+  { id: 'u-1', firstName: 'Super', lastName: 'Admin', email: 'super@vertriebshub.de', role: 'super_admin', isActive: true, language: 'de', callCenter: 'Hauptverwaltung', team: 'Management', lastLogin: 'Vor 5 Min' },
   { id: 'u-2', firstName: 'Firma', lastName: 'Admin', email: 'admin@demo.de', role: 'tenant_admin', isActive: true, language: 'de', callCenter: 'Berlin Call Center', team: 'Operations', lastLogin: 'Heute, 08:00' },
   { id: 'u-3', firstName: 'Ahmet', lastName: 'Yilmaz', email: 'teamlead@demo.de', role: 'team_leader', isActive: true, language: 'tr', callCenter: 'Berlin Call Center', team: 'Team Alpha', lastLogin: 'Heute, 08:30' },
   { id: 'u-4', firstName: 'Mehmet', lastName: 'Demir', email: 'agent1@demo.de', role: 'agent', isActive: true, language: 'tr', callCenter: 'Berlin Call Center', team: 'Team Alpha', lastLogin: 'Heute, 08:45' },
