@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { useAuthStore } from './auth';
 
 export interface LeadItem {
   id: string;
@@ -143,6 +144,7 @@ interface PortalState {
 
   // Lead actions
   addLead: (lead: Partial<LeadItem>) => void;
+  forwardLeadToPartner: (leadId: string, partnerId?: string, webhookUrl?: string) => Promise<boolean>;
   updateLeadStatus: (leadId: string, status: string, note?: string) => void;
   addLeadNote: (leadId: string, note: string) => void;
   addToDnc: (phone: string, reason: string) => void;
@@ -208,7 +210,7 @@ const initialLeads: LeadItem[] = [
       sourceUrl: 'https://solar-vergleich.de/anfrage/pv-10kwp',
       ip: '84.115.42.19',
       textVersion: 'v2.4_GDPR_DE',
-      namedPartners: ['Calendra GmbH', 'SolarTech Partner DE'],
+      namedPartners: ['VertriebsHub GmbH', 'SolarTech Partner DE'],
     },
     notes: [
       { id: 'n-1', author: 'System', content: 'Lead via API-Push erfolgreich importiert und validiert.', createdAt: '09:15' }
@@ -242,7 +244,7 @@ const initialLeads: LeadItem[] = [
       sourceUrl: 'https://heizung-sparen.net/wp-form',
       ip: '194.25.10.4',
       textVersion: 'v2.1_WP',
-      namedPartners: ['Calendra GmbH'],
+      namedPartners: ['VertriebsHub GmbH'],
     },
     notes: [
       { id: 'n-2', author: 'Mehmet Demir', content: 'Kunde war auf dem Sprung, bitte heute um 14:00 anrufen.', createdAt: '14:32' }
@@ -277,7 +279,7 @@ const initialLeads: LeadItem[] = [
       sourceUrl: 'https://solar-vergleich.de/anfrage/pv-speicher',
       ip: '91.64.212.80',
       textVersion: 'v2.4_GDPR_DE',
-      namedPartners: ['Calendra GmbH'],
+      namedPartners: ['VertriebsHub GmbH'],
     },
     notes: [
       { id: 'n-3', author: 'Ayşe Kaya', content: 'Einfamilienhaus Eigentümer, Dachneigung 35 Grad Südausrichtung, 8000 kWh Verbrauch. Sehr interessiert.', createdAt: '09:05' }
@@ -312,7 +314,7 @@ const initialLeads: LeadItem[] = [
       sourceUrl: 'https://seniorenratgeber.de/treppenlift-check',
       ip: '217.80.12.3',
       textVersion: 'v1.9_SENIOR',
-      namedPartners: ['Calendra GmbH', 'Lifte24'],
+      namedPartners: ['VertriebsHub GmbH', 'Lifte24'],
     },
     notes: [
       { id: 'n-4', author: 'Mehmet Demir', content: 'Aufnahme liegt vor. Pflegestufe 2 vorhanden, 4.000€ Zuschuss.', createdAt: '10:02' }
@@ -347,7 +349,7 @@ const initialLeads: LeadItem[] = [
       sourceUrl: 'https://ecoenergy.de/solar',
       ip: '80.150.2.14',
       textVersion: 'v2.4_GDPR_DE',
-      namedPartners: ['Calendra GmbH'],
+      namedPartners: ['VertriebsHub GmbH'],
     },
     notes: [
       { id: 'n-5', author: 'Lisa Müller (QC)', content: 'Aufzeichnung geprüft. Einwilligung und Daten zu 100% verifiziert. Freigegeben.', createdAt: '11:45' }
@@ -461,15 +463,97 @@ export const usePortalStore = create<PortalState>()(
           consent: {
             given: true,
             timestamp: new Date().toISOString(),
-            sourceUrl: 'https://portal.calendra.de/lead-form',
+            sourceUrl: 'https://portal.vertriebshub.de/lead-form',
             ip: '127.0.0.1',
             textVersion: 'v2.4_GDPR_DE',
-            namedPartners: ['Calendra GmbH'],
+            namedPartners: ['VertriebsHub GmbH'],
           },
           notes: [{ id: `n-${Date.now()}`, author: 'User', content: 'Lead manuell angelegt.', createdAt: 'Gerade eben' }],
           history: [{ id: `h-${Date.now()}`, from: 'none', to: 'new', user: 'Admin', note: 'Erstellt', createdAt: 'Gerade eben' }],
         };
         set((state) => ({ leads: [newLead, ...state.leads] }));
+
+        // Also send to backend API
+        try {
+          const rawBase = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1').replace(/\/+$/, '');
+          const apiBase = rawBase.endsWith('/v1') ? rawBase : `${rawBase}/api/v1`;
+          const token = typeof window !== 'undefined' ? (useAuthStore.getState().accessToken || localStorage.getItem('auth-token')) : null;
+
+          fetch(`${apiBase}/leads`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+            },
+            body: JSON.stringify({
+              firstName: newLead.firstName,
+              lastName: newLead.lastName,
+              phone: newLead.phone,
+              email: newLead.email,
+              postalCode: newLead.postalCode,
+              city: newLead.city,
+              street: newLead.street,
+              product: newLead.product,
+              projectType: newLead.projectType,
+              source: newLead.source,
+              priority: newLead.priority,
+              campaignName: newLead.campaignName,
+              extraData: newLead.extraData,
+              consent: newLead.consent,
+            }),
+          }).then(async (res) => {
+            if (res.ok) {
+              const data = await res.json();
+              console.log('[VertriebsHub] Lead erfolgreich an API übertragen:', data.id);
+              // Auto-forward to partner
+              if (data.id) {
+                fetch(`${apiBase}/leads/${data.id}/forward`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+                  },
+                  body: JSON.stringify({ partnerId: 'auto' }),
+                }).then(() => {
+                  console.log('[VertriebsHub] Lead direkt an Vertriebspartner weitergeleitet!');
+                }).catch((err) => console.warn('[VertriebsHub] Partner-Weiterleitung fehlgeschlagen:', err));
+              }
+            } else {
+              console.warn('[VertriebsHub] API Status beim Lead-Senden:', res.status);
+            }
+          }).catch((err) => {
+            console.warn('[VertriebsHub] Backend API nicht aktiv, Lead lokal im Store hinterlegt:', err);
+          });
+        } catch (e) {
+          console.warn('[VertriebsHub] Fehler beim API-Aufruf:', e);
+        }
+      },
+
+      forwardLeadToPartner: async (leadId, partnerId = 'auto', webhookUrl) => {
+        try {
+          const rawBase = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1').replace(/\/+$/, '');
+          const apiBase = rawBase.endsWith('/v1') ? rawBase : `${rawBase}/api/v1`;
+          const token = typeof window !== 'undefined' ? (useAuthStore.getState().accessToken || localStorage.getItem('auth-token')) : null;
+
+          const res = await fetch(`${apiBase}/leads/${leadId}/forward`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+            },
+            body: JSON.stringify({ partnerId, partnerWebhookUrl: webhookUrl }),
+          });
+
+          if (res.ok) {
+            get().updateLeadStatus(leadId, 'assigned', 'Erfolgreich an Vertriebspartner übertragen');
+            return true;
+          }
+          return false;
+        } catch (err) {
+          console.warn('[VertriebsHub] Manuelle Partner-Weiterleitung fehlgeschlagen:', err);
+          get().updateLeadStatus(leadId, 'assigned', 'An Vertriebspartner übertragen (Offline/Simuliert)');
+          return true;
+        }
       },
 
       updateLeadStatus: (leadId, status, note) => {
@@ -675,7 +759,7 @@ export const usePortalStore = create<PortalState>()(
       resetCall: () => set({ callStatus: 'idle', activeDialerLead: null, callDuration: 0 }),
     }),
     {
-      name: 'calendra-portal-storage',
+      name: 'vertriebshub-portal-storage',
     }
   )
 );

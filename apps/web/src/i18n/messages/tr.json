@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Calendra Lead",
+    "appName": "VertriebsHub",
     "loading": "Yükleniyor...",
     "save": "Kaydet",
     "cancel": "İptal",
@@ -52,7 +52,7 @@
     "password": "Şifre",
     "loginButton": "Sisteme Giriş Yap",
     "loginTitle": "Hoş Geldiniz",
-    "loginSubtitle": "Calendra Lead Verteilungs- & Dialer Portalı",
+    "loginSubtitle": "VertriebsHub Verteilungs- & Dialer Portalı",
     "quickLogin": "Hızlı Demo Girişi (Tek Tıkla Seçin)",
     "forgotPassword": "Şifremi unuttum",
     "invalidCredentials": "Geçersiz giriş bilgileri",
@@ -193,7 +193,7 @@
     }
   },
   "tour": {
-    "title": "Calendra Portalı Hızlı Başlangıç Rehberi",
+    "title": "VertriebsHub Portalı Hızlı Başlangıç Rehberi",
     "step": "Adım {current} / {total}",
     "finish": "Turu Tamamla",
     "steps": [

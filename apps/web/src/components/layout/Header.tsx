@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { 
   Bell, User, LogOut, BookOpen, Globe, Building2, 
   CheckCircle, ChevronDown, Activity, Sparkles, Layers,
-  ExternalLink, Check, Radio, ShieldCheck, Menu, X
+  ExternalLink, Check, Radio, ShieldCheck, Menu, X, ArrowLeft
 } from 'lucide-react';
 import { useAuthStore } from '@/stores/auth';
 import { usePortalStore } from '@/stores/portalStore';
@@ -51,6 +51,15 @@ export function Header() {
     <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-white/[0.06] bg-dark-950/85 backdrop-blur-2xl px-4 sm:px-6 lg:px-8 shadow-2xl">
       {/* Left: Brand & Company Switcher */}
       <div className="flex items-center gap-3 sm:gap-5">
+        {/* Mobile Back Button */}
+        <button
+          onClick={() => router.back()}
+          className="md:hidden flex items-center justify-center h-10 w-10 rounded-xl bg-dark-900 border border-white/[0.08] text-gray-300 hover:text-gold-400 hover:border-gold-500/40 transition-all shrink-0"
+          aria-label="Zurück"
+        >
+          <ArrowLeft size={19} />
+        </button>
+
         {/* Mobile Hamburger Menu Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -64,17 +73,17 @@ export function Header() {
           onClick={() => router.push('/')}
           className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group select-none"
         >
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gold-metallic text-dark-950 font-black text-xl shadow-gold-md group-hover:scale-105 group-hover:shadow-gold-lg transition-all duration-300">
-            <span className="relative z-10 drop-shadow-sm">C</span>
-            <div className="absolute inset-0 rounded-xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gold-metallic text-dark-950 font-black text-xl shadow-gold-md group-hover:scale-110 group-hover:shadow-gold-lg transition-all duration-300 animate-glow">
+            <span className="relative z-10 drop-shadow-sm font-black">V</span>
+            <div className="absolute inset-0 rounded-xl bg-white/25 opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
           <div>
-            <div className="text-lg font-black tracking-tight text-gray-100 flex items-center gap-1">
-              Calendra <span className="gold-gradient-text font-black">Lead</span>
+            <div className="text-lg font-black tracking-tight text-gray-100 flex items-center gap-1 group-hover:text-gold-200 transition-colors">
+              Vertriebs<span className="gold-gradient-text font-black">Hub</span>
             </div>
             <div className="flex items-center gap-1.5 -mt-1">
               <span className="text-[9px] font-mono tracking-widest text-gold-400 uppercase font-semibold">
-                Enterprise Dialer
+                Lead Management & Vertrieb
               </span>
               <span className="text-gray-600 text-[9px]">•</span>
               <span className="text-[9px] text-gray-500 font-mono">v1.2</span>

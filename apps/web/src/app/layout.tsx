@@ -4,7 +4,7 @@ import { getMessages, getLocale } from 'next-intl/server';
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Calendra Lead",
+  title: "VertriebsHub",
   description: "Lead Management Portal",
 };
 

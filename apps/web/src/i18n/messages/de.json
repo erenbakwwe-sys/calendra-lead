@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Calendra Lead",
+    "appName": "VertriebsHub",
     "loading": "Laden...",
     "save": "Speichern",
     "cancel": "Abbrechen",
@@ -52,7 +52,7 @@
     "password": "Passwort",
     "loginButton": "Im Portal anmelden",
     "loginTitle": "Willkommen zurück",
-    "loginSubtitle": "Calendra Lead-Verteilungs- & Dialer-Portal",
+    "loginSubtitle": "VertriebsHub-Verteilungs- & Dialer-Portal",
     "quickLogin": "Schnell-Login für Demo (Rolle auswählen)",
     "forgotPassword": "Passwort vergessen?",
     "invalidCredentials": "Ungültige Anmeldedaten",
@@ -193,7 +193,7 @@
     }
   },
   "tour": {
-    "title": "Calendra Portal Einführungstour",
+    "title": "VertriebsHub Portal Einführungstour",
     "step": "Schritt {current} von {total}",
     "finish": "Tour abschließen",
     "steps": [

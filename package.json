@@ -1,12 +1,12 @@
 {
-  "name": "calendra-lead",
+  "name": "vertriebshub",
   "private": true,
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "dev:api": "cd apps/api && npm run start:dev",
     "dev:web": "cd apps/web && npm run dev",
     "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
-    "build": "npm run build --workspace=@calendra/web",
+    "build": "npm run build --workspace=@vertriebshub/web",
     "build:all": "npm run build --workspaces",
     "db:migrate": "cd apps/api && npx prisma migrate dev",
     "db:seed": "cd apps/api && npx prisma db seed",

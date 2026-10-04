@@ -25,6 +25,7 @@ export function LeadIntakeWizard({ isOpen = true, onClose, defaultProject = 'sol
   const { addLead, startCall } = usePortalStore();
 
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
+  const [compactMode, setCompactMode] = useState(false);
   const [selectedProject, setSelectedProject] = useState<ProjectKey>(defaultProject);
   const [createdLead, setCreatedLead] = useState<LeadItem | null>(null);
 
@@ -224,10 +225,10 @@ export function LeadIntakeWizard({ isOpen = true, onClose, defaultProject = 'sol
       consent: {
         given: true,
         timestamp: new Date().toISOString(),
-        sourceUrl: 'https://portal.calendra.de/lead-tool',
+        sourceUrl: 'https://portal.vertriebshub.de/lead-tool',
         ip: '127.0.0.1',
         textVersion: 'v2.4_GDPR_DE',
-        namedPartners: ['Calendra GmbH', projInfo.title],
+        namedPartners: ['VertriebsHub GmbH', projInfo.title],
       },
       notes: [{ id: '1', author: 'Agent / Erfasser', content: `Kunde für ${projInfo.title} eingetragen.`, createdAt: 'Heute' }],
       history: [{ id: '1', from: 'none', to: 'new', user: 'Projekt-Tool', note: 'Lead aufgenommen', createdAt: 'Jetzt' }],
@@ -238,8 +239,8 @@ export function LeadIntakeWizard({ isOpen = true, onClose, defaultProject = 'sol
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-in fade-in duration-200 overflow-y-auto">
-      <div className="relative w-full max-w-4xl bg-dark-900 border border-gold-500/40 rounded-3xl shadow-2xl shadow-gold-500/10 overflow-hidden flex flex-col my-8 max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-in fade-in duration-300 overflow-y-auto">
+      <div className="relative w-full max-w-4xl bg-dark-900 border border-gold-500/40 rounded-3xl shadow-2xl shadow-gold-500/20 overflow-hidden flex flex-col my-8 max-h-[92vh] animate-in zoom-in-95 duration-300">
         {/* Header Bar */}
         <div className="flex items-center justify-between px-6 py-5 bg-dark-850 border-b border-white/[0.08]">
           <div className="flex items-center gap-3">
@@ -261,18 +262,31 @@ export function LeadIntakeWizard({ isOpen = true, onClose, defaultProject = 'sol
             </div>
           </div>
 
-          {onClose && (
+          <div className="flex items-center gap-3">
             <button
-              onClick={onClose}
-              className="p-2 rounded-xl text-gray-400 hover:text-gray-100 hover:bg-dark-800 transition-colors"
+              onClick={() => setCompactMode(!compactMode)}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
+                compactMode
+                  ? 'bg-gradient-to-r from-gold-500 to-amber-500 text-dark-950 border-gold-400 shadow-gold-sm scale-105'
+                  : 'bg-dark-800 text-gray-300 border-white/[0.08] hover:border-gold-500/40 hover:text-white'
+              }`}
             >
-              <X size={20} />
+              <Sparkles size={12} className={compactMode ? 'text-dark-950' : 'text-gold-400'} />
+              <span>{compactMode ? '✓ Kompaktmodus' : 'Kompaktmodus'}</span>
             </button>
-          )}
+            {onClose && (
+              <button
+                onClick={onClose}
+                className="p-2 rounded-xl text-gray-400 hover:text-gray-100 hover:bg-dark-800 transition-colors"
+              >
+                <X size={20} />
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Wizard Steps Indicator (1 to 4) */}
-        {!createdLead && (
+        {!createdLead && !compactMode && (
           <div className="flex items-center justify-between px-8 py-3 bg-dark-950/70 border-b border-white/[0.06] text-xs font-semibold">
             {[
               { num: 1, label: '1. Projekt wählen' },
@@ -343,6 +357,13 @@ export function LeadIntakeWizard({ isOpen = true, onClose, defaultProject = 'sol
                   <span className="text-gray-500">Projekt:</span>
                   <span className="text-emerald-400 font-bold">{createdLead.product}</span>
                 </div>
+                <div className="flex justify-between items-center text-gray-300 pt-2 border-t border-white/[0.08]">
+                  <span className="text-gray-500">Vertriebspartner API:</span>
+                  <span className="text-emerald-400 font-bold flex items-center gap-1">
+                    <CheckCircle2 size={13} />
+                    <span>Direkt übermittelt</span>
+                  </span>
+                </div>
               </div>
 
               {/* Actions */}
@@ -385,7 +406,7 @@ export function LeadIntakeWizard({ isOpen = true, onClose, defaultProject = 'sol
           ) : (
             <>
               {/* STEP 1: PROJECT SELECTION */}
-              {step === 1 && (
+              {(compactMode || step === 1) && (
                 <div className="space-y-4">
                   <div>
                     <h3 className="text-base font-extrabold text-gray-100 flex items-center gap-2">
@@ -458,7 +479,7 @@ export function LeadIntakeWizard({ isOpen = true, onClose, defaultProject = 'sol
               )}
 
               {/* STEP 2: CONTACT INFORMATION */}
-              {step === 2 && (
+              {(compactMode || step === 2) && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
                     <div>
@@ -589,7 +610,7 @@ export function LeadIntakeWizard({ isOpen = true, onClose, defaultProject = 'sol
               )}
 
               {/* STEP 3: PROJECT-SPECIFIC QUALIFICATION FORM */}
-              {step === 3 && (
+              {(compactMode || step === 3) && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
                     <div>
@@ -1021,7 +1042,7 @@ export function LeadIntakeWizard({ isOpen = true, onClose, defaultProject = 'sol
               )}
 
               {/* STEP 4: DSGVO CONSENT & FINAL CONFIRMATION */}
-              {step === 4 && (
+              {(compactMode || step === 4) && (
                 <div className="space-y-5">
                   <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
                     <div>
@@ -1058,7 +1079,7 @@ export function LeadIntakeWizard({ isOpen = true, onClose, defaultProject = 'sol
                     </div>
 
                     <p className="text-gray-300 leading-relaxed text-[11px]">
-                      "Hiermit wird bestätigt, dass der Verbraucher im Rahmen des Erstkontakts der Kontaktaufnahme durch Fachpartner der Calendra Plattform für das Projekt <strong>{projectDefinitions[selectedProject].title}</strong> ausdrücklich zugestimmt hat."
+                      "Hiermit wird bestätigt, dass der Verbraucher im Rahmen des Erstkontakts der Kontaktaufnahme durch Fachpartner der VertriebsHub Plattform für das Projekt <strong>{projectDefinitions[selectedProject].title}</strong> ausdrücklich zugestimmt hat."
                     </p>
 
                     <label className="flex items-center gap-3 p-3 rounded-xl bg-dark-900 border border-white/[0.06] cursor-pointer">
@@ -1077,35 +1098,8 @@ export function LeadIntakeWizard({ isOpen = true, onClose, defaultProject = 'sol
               )}
 
               {/* Wizard Footer Controls */}
-              <div className="flex items-center justify-between pt-4 border-t border-white/[0.06]">
-                {step > 1 ? (
-                  <Button
-                    variant="secondary"
-                    onClick={() => setStep((step - 1) as any)}
-                    className="flex items-center gap-2"
-                  >
-                    <ArrowLeft size={14} />
-                    <span>Zurück</span>
-                  </Button>
-                ) : (
-                  <div />
-                )}
-
-                {step < 4 ? (
-                  <Button
-                    onClick={() => {
-                      if (step === 2 && (!contact.firstName || !contact.phone)) {
-                        alert('Bitte mindestens Vorname und Telefonnummer eingeben.');
-                        return;
-                      }
-                      setStep((step + 1) as any);
-                    }}
-                    className="gold-button-gradient text-dark-950 font-black flex items-center gap-2 px-6"
-                  >
-                    <span>Weiter zu Schritt {step + 1}</span>
-                    <ArrowRight size={14} />
-                  </Button>
-                ) : (
+              {compactMode ? (
+                <div className="flex items-center justify-end pt-4 border-t border-white/[0.06]">
                   <Button
                     onClick={handleCompleteSubmit}
                     disabled={!consentConfirmed}
@@ -1114,8 +1108,48 @@ export function LeadIntakeWizard({ isOpen = true, onClose, defaultProject = 'sol
                     <Check size={16} />
                     <span>Kunde verbindlich im System anlegen</span>
                   </Button>
-                )}
-              </div>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between pt-4 border-t border-white/[0.06]">
+                  {step > 1 ? (
+                    <Button
+                      variant="secondary"
+                      onClick={() => setStep((step - 1) as any)}
+                      className="flex items-center gap-2"
+                    >
+                      <ArrowLeft size={14} />
+                      <span>Zurück</span>
+                    </Button>
+                  ) : (
+                    <div />
+                  )}
+
+                  {step < 4 ? (
+                    <Button
+                      onClick={() => {
+                        if (step === 2 && (!contact.firstName || !contact.phone)) {
+                          alert('Bitte mindestens Vorname und Telefonnummer eingeben.');
+                          return;
+                        }
+                        setStep((step + 1) as any);
+                      }}
+                      className="gold-button-gradient text-dark-950 font-black flex items-center gap-2 px-6"
+                    >
+                      <span>Weiter zu Schritt {step + 1}</span>
+                      <ArrowRight size={14} />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={handleCompleteSubmit}
+                      disabled={!consentConfirmed}
+                      className="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:brightness-110 text-white font-extrabold px-8 py-3.5 rounded-xl shadow-lg shadow-emerald-600/30 flex items-center gap-2"
+                    >
+                      <Check size={16} />
+                      <span>Kunde verbindlich im System anlegen</span>
+                    </Button>
+                  )}
+                </div>
+              )}
             </>
           )}
         </div>

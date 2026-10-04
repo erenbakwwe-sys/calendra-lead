@@ -92,11 +92,11 @@ export function Sidebar() {
                 href={item.href}
                 onClick={onItemClick}
                 className={cn(
-                  "group relative flex items-center justify-between rounded-xl px-3.5 py-2.5 text-xs font-semibold transition-all duration-200",
+                  "group relative flex items-center justify-between rounded-xl px-3.5 py-2.5 text-xs font-semibold transition-all duration-300 hover:translate-x-1",
                   isActive 
-                    ? "bg-gradient-to-r from-gold-500/20 via-gold-500/10 to-transparent text-gold-300 font-bold border-l-2 border-gold-500 shadow-sm" 
-                    : "text-gray-400 hover:bg-white/[0.04] hover:text-gray-100",
-                  item.highlight && !isActive && "text-amber-300 bg-amber-500/10 border border-amber-500/20 hover:bg-amber-500/15"
+                    ? "bg-gradient-to-r from-gold-500/25 via-gold-500/10 to-transparent text-gold-200 font-bold border-l-2 border-gold-500 shadow-gold-sm" 
+                    : "text-gray-400 hover:bg-white/[0.05] hover:text-gray-100",
+                  item.highlight && !isActive && "text-amber-300 bg-amber-500/10 border border-amber-500/20 hover:bg-amber-500/20 hover:border-amber-500/40"
                 )}
               >
                 <div className="flex items-center gap-3">
@@ -190,10 +190,10 @@ export function Sidebar() {
         <div className="p-4 border-b border-white/[0.08] flex items-center justify-between bg-dark-900/60">
           <div className="flex items-center gap-2.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold-metallic text-dark-950 font-black text-base shadow-gold-sm">
-              C
+              V
             </div>
             <div>
-              <span className="font-extrabold text-sm text-gray-100">Calendra Lead</span>
+              <span className="font-extrabold text-sm text-gray-100">VertriebsHub</span>
               <span className="text-[9px] font-mono block text-gold-400 uppercase">Mobil-Menü</span>
             </div>
           </div>

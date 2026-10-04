@@ -57,7 +57,41 @@ const config: Config = {
         'gold-metallic': 'linear-gradient(135deg, #ECC86A 0%, #D4AF37 40%, #B89326 75%, #8A6A12 100%)',
         'gold-shimmer': 'linear-gradient(90deg, #D4AF37 0%, #FFF0BA 50%, #D4AF37 100%)',
         'dark-mesh': 'radial-gradient(at 0% 0%, rgba(212, 175, 55, 0.08) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(30, 41, 59, 0.3) 0px, transparent 50%)',
-      }
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-6px)' },
+        },
+        'pulse-slow': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.4' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+        glow: {
+          '0%, 100%': { filter: 'drop-shadow(0 0 12px rgba(212, 175, 55, 0.35))' },
+          '50%': { filter: 'drop-shadow(0 0 24px rgba(212, 175, 55, 0.65))' },
+        },
+        'radar-pulse': {
+          '0%': { transform: 'scale(0.95)', opacity: '0.8' },
+          '100%': { transform: 'scale(2.2)', opacity: '0' },
+        },
+        'gradient-x': {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+      },
+      animation: {
+        float: 'float 4s ease-in-out infinite',
+        'pulse-slow': 'pulse-slow 3s ease-in-out infinite',
+        shimmer: 'shimmer 2.5s infinite linear',
+        glow: 'glow 3s ease-in-out infinite',
+        radar: 'radar-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+        'gradient-x': 'gradient-x 6s ease infinite',
+      },
     },
   },
   plugins: [],

@@ -15,12 +15,14 @@ import { LeadIntakeWizard } from '@/components/leads/LeadIntakeWizard';
 export default function LeadsPage() {
   const t = useTranslations('leads');
   const commonT = useTranslations('common');
-  const { leads, startCall, updateLeadStatus, addToDnc, addLead } = usePortalStore();
+  const { leads, startCall, updateLeadStatus, addToDnc, addLead, forwardLeadToPartner } = usePortalStore();
 
   const [search, setSearch] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [selectedProduct, setSelectedProduct] = useState<string>('all');
   const [detailLead, setDetailLead] = useState<LeadItem | null>(null);
+  const [forwardingId, setForwardingId] = useState<string | null>(null);
+  const [forwardSuccess, setForwardSuccess] = useState(false);
   const [newLeadModalOpen, setNewLeadModalOpen] = useState(false);
   const [newLeadForm, setNewLeadForm] = useState({
     firstName: '',
@@ -61,7 +63,7 @@ export default function LeadsPage() {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `calendra_leads_${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute('download', `vertriebshub_leads_${new Date().toISOString().split('T')[0]}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -354,7 +356,29 @@ export default function LeadsPage() {
             </div>
 
             {/* Quick Actions */}
-            <div className="pt-4 border-t border-dark-border flex gap-2">
+            <div className="pt-4 border-t border-dark-border flex flex-col gap-2">
+              <Button
+                onClick={async () => {
+                  setForwardingId(detailLead.id);
+                  const ok = await forwardLeadToPartner(detailLead.id);
+                  setForwardingId(null);
+                  if (ok) {
+                    setForwardSuccess(true);
+                    setTimeout(() => setForwardSuccess(false), 3000);
+                  }
+                }}
+                className="w-full text-xs font-bold bg-gradient-to-r from-gold-500 to-amber-500 text-dark-950 flex items-center justify-center gap-1.5 shadow-md shadow-gold-500/20 py-2.5 rounded-xl hover:brightness-110"
+              >
+                <Building size={14} />
+                <span>
+                  {forwardingId === detailLead.id
+                    ? 'Wird an Partner übermittelt...'
+                    : forwardSuccess
+                    ? '✓ Erfolgreich an Vertriebspartner übermittelt'
+                    : 'Jetzt an Vertriebspartner senden (API Push)'}
+                </span>
+              </Button>
+
               <Button
                 variant="secondary"
                 onClick={() => {

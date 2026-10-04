@@ -33,7 +33,7 @@ async function bootstrap() {
 
   // Swagger
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Calendra Lead API')
+    .setTitle('VertriebsHub API')
     .setDescription('Multi-tenant Lead Distribution and Dialer Portal API')
     .setVersion('1.0')
     .addBearerAuth()
@@ -44,7 +44,7 @@ async function bootstrap() {
 
   const port = configService.get<number>('API_PORT', 3001);
   await app.listen(port);
-  console.log(`🚀 Calendra API running on http://localhost:${port}`);
+  console.log(`🚀 VertriebsHub API running on http://localhost:${port}`);
   console.log(`📚 Swagger docs at http://localhost:${port}/api/docs`);
 }
 bootstrap();

@@ -1,4 +1,4 @@
-# Calendra Lead Portal
+# VertriebsHub
 
 Mandantenfähiges Lead-Verteilungs- und Dialer-Portal für den deutschen Markt.
 

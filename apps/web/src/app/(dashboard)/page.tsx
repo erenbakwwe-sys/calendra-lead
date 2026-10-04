@@ -169,7 +169,12 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-300 max-w-7xl mx-auto">
+    <div className="space-y-8 animate-in fade-in duration-300 max-w-7xl mx-auto relative">
+      {/* Background Ambient Glows */}
+      <div className="ambient-glow-gold -top-20 right-10 animate-pulse-slow pointer-events-none" />
+      <div className="ambient-glow-purple top-80 -left-20 animate-pulse-slow pointer-events-none" />
+      <div className="ambient-glow-emerald bottom-40 right-20 animate-pulse-slow pointer-events-none" />
+
       {/* Executive Command Banner */}
       <div className="relative rounded-3xl bg-dark-900 border border-white/[0.08] p-6 lg:p-8 shadow-card-dark overflow-hidden">
         {/* Subtle radial gradients */}
@@ -264,14 +269,17 @@ export default function DashboardPage() {
                   setWizardDefaultProject(p.key);
                   setLeadWizardOpen(true);
                 }}
-                className="flex items-center gap-2 p-2.5 rounded-xl bg-dark-850/90 border border-white/[0.06] hover:border-gold-500/50 hover:bg-gold-500/10 text-gray-200 hover:text-white transition-all duration-200 group text-left"
+                className="flex items-center gap-2.5 p-3 rounded-xl bg-dark-850/90 border border-white/[0.06] hover:border-gold-500/60 hover:bg-gold-500/10 hover:-translate-y-1 hover:shadow-gold-sm active:translate-y-0 text-gray-200 hover:text-white transition-all duration-300 group text-left cursor-pointer"
               >
-                <div className={`p-1.5 rounded-lg bg-dark-900 border border-white/[0.04] ${p.color} group-hover:scale-110 transition-transform`}>
-                  <p.icon size={15} />
+                <div className={`p-2 rounded-xl bg-dark-900 border border-white/[0.05] ${p.color} group-hover:scale-115 group-hover:rotate-3 transition-transform duration-300 shadow-sm`}>
+                  <p.icon size={16} />
                 </div>
                 <div className="truncate">
-                  <div className="font-bold text-xs truncate group-hover:text-gold-300">{p.label}</div>
-                  <div className="text-[9px] text-gray-500 font-mono">Erfassen →</div>
+                  <div className="font-extrabold text-xs truncate group-hover:text-gold-200 transition-colors">{p.label}</div>
+                  <div className="text-[10px] text-gray-500 font-mono flex items-center gap-1 group-hover:text-gold-400/80 transition-colors">
+                    <span>Erfassen</span>
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
                 </div>
               </button>
             ))}
